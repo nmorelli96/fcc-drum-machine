@@ -46,12 +46,30 @@ const drumSounds = [
   }
 ];
 
+class Misc extends React.Component {
+  constructor(props) {
+    super(props);
+
+  }
+
+  render() {
+    return (
+      <div className='container'>
+        <div id='display'>
+          {this.props.playing}
+        </div>
+      </div>
+    );
+  }
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      message: '',
+      message: 'You pressed no key!',
+      playing: ''
     };
     this.playSound = this.playSound.bind(this);
     this.handleKeyId = this.handleKeyId.bind(this);
@@ -66,8 +84,13 @@ class App extends React.Component {
   }
 
   playSound(key) {
-    document.getElementById(key).currentTime = 0;
-    document.getElementById(key).play();
+    const keyElem = document.getElementById(key.toUpperCase());
+    this.setState((state) => ({
+      playing: `${keyElem.dataset.id}`,
+    }))
+    console.log(this.state)
+    keyElem.currentTime = 0;
+    keyElem.play();
   }
 
   handleKeyId(key) {
@@ -77,7 +100,7 @@ class App extends React.Component {
   }
 
   handleKeyPress(event) {
-    if (event.key.match(/[qweasdzxc]/)) {
+    if (event.key.match(/[qweasdzxc]/i)) {
       this.handleKeyId(event.key)
       this.playSound(event.key)
     }
@@ -88,15 +111,20 @@ class App extends React.Component {
   }
 
   render() {
-    const buttons = drumSounds.map((elem) => 
-    <button data-key={elem.key} onClick={this.handleClick}>{elem.key.toUpperCase()}</button>)
-    const audioElems = drumSounds.map((elem) => 
-    <audio id={elem.key} src={elem.src}></audio>)
+    const buttons = drumSounds.map((elem) =>
+      <button className='btn btn-dark m-1 drum-pad' id={elem.id}
+        data-key={elem.key} onClick={this.handleClick}>{elem.key.toUpperCase()}
+        <audio className='clip' id={elem.key.toUpperCase()}
+          src={elem.src} data-id={elem.id}>
+        </audio>
+      </button>)
     return (
-      <div>
-        <h1>{this.state.message}</h1>
-        {buttons}
-        {audioElems}
+      <div className="container" id="drum-machine">
+        <div class="container">
+          <h1>{this.state.message}</h1>
+          {buttons}
+        </div>
+        <Misc playing={this.state.playing}/>
       </div>
     );
   }
