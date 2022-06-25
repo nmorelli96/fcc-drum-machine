@@ -89,7 +89,7 @@ class App extends React.Component {
 
   render() {
     const buttons = drumSounds.map((elem) => 
-    <button data-key={elem.key} onClick={this.handleClick}>{elem.id}</button>)
+    <button data-key={elem.key} onClick={this.handleClick}>{elem.key.toUpperCase()}</button>)
     const audioElems = drumSounds.map((elem) => 
     <audio id={elem.key} src={elem.src}></audio>)
     return (
