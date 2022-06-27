@@ -1,0 +1,83 @@
+html {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body::before {
+  z-index: -1;
+  content: "";
+  background: black url("/resources/matthijs-smit-bRG2C0FAQEY-unsplash.jpg") no-repeat center center !important;
+  background-size: cover;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  filter: brightness(40%) saturate(0%);
+}
+
+#app {
+  height: 100vh;
+}
+
+#drum-machine {
+
+  #drum-machine-row {
+    background-color: rgba(0, 0, 0, 0.75);
+    border-radius: 5%;
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    max-width: 650px;
+
+    #btn-container {
+      min-width: 350px !important;
+      max-width: 350px !important;
+
+      .row {
+
+        .col {
+          padding: 0;
+          flex: 0 !important;
+
+          button {
+            width: 100px;
+            height: 100px;
+            padding: 0;
+          }
+        }
+      }
+    }
+
+    #misc-container {
+      min-width: 300px !important;
+      max-width: 300px !important;
+
+      .container {
+        
+
+        #display {
+          background-color: grey;
+          text-align: center;
+          width: 150px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #drum-machine-row {
+    max-width: 350px !important;
+    min-height: 500px !important;
+  }
+
+  #btn-container {
+    min-width: 350px !important;
+    max-width: 350px !important;
+
+    button {
+      width: 75px !important;
+      height: 75px !important;
+    }
+  }
+}
