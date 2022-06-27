@@ -46,7 +46,7 @@ const drumSounds = [
   }
 ];
 
-class Misc extends React.Component {
+class Soundboard extends React.Component {
   constructor(props) {
     super(props);
 
@@ -63,16 +63,30 @@ class Misc extends React.Component {
   }
 }
 
+class Misc extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div className='container d-flex align-items-center justify-content-center'>
+        <div id='display'>
+          {this.props.playing}
+        </div>
+      </div>
+    );
+  }
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      message: 'You pressed no key!',
-      playing: ''
+      playing: 'Welcome'
     };
     this.playSound = this.playSound.bind(this);
-    this.handleKeyId = this.handleKeyId.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
@@ -88,20 +102,12 @@ class App extends React.Component {
     this.setState((state) => ({
       playing: `${keyElem.dataset.id}`,
     }))
-    console.log(this.state)
     keyElem.currentTime = 0;
     keyElem.play();
   }
 
-  handleKeyId(key) {
-    this.setState((state) => ({
-      message: `You pressed the ${key} key! `,
-    }))
-  }
-
   handleKeyPress(event) {
     if (event.key.match(/[qweasdzxc]/i)) {
-      this.handleKeyId(event.key)
       this.playSound(event.key)
     }
   }
@@ -119,12 +125,47 @@ class App extends React.Component {
         </audio>
       </button>)
     return (
-      <div className="container" id="drum-machine">
-        <div class="container">
-          <h1>{this.state.message}</h1>
-          {buttons}
+      <div className="container d-flex justify-content-center" id="drum-machine">
+        <div className="row align-items-center justify-content-center" id="drum-machine-row">
+          <div className="col" id="btn-container">
+            <div className="row flex-nowrap justify-content-center">
+              <div className="col">
+                {buttons[0]}
+              </div>
+              <div className="col">
+                {buttons[1]}
+              </div>
+              <div className="col">
+                {buttons[2]}
+              </div>
+            </div>
+            <div className="row flex-nowrap justify-content-center">
+              <div className="col">
+                {buttons[3]}
+              </div>
+              <div className="col">
+                {buttons[4]}
+              </div>
+              <div className="col">
+                {buttons[5]}
+              </div>
+            </div>
+            <div className="row flex-nowrap justify-content-center">
+              <div className="col">
+                {buttons[6]}
+              </div>
+              <div className="col">
+                {buttons[7]}
+              </div>
+              <div className="col">
+                {buttons[8]}
+              </div>
+            </div>
+          </div>
+          <div className="col" id="misc-container">
+            <Misc playing={this.state.playing} />
+          </div>
         </div>
-        <Misc playing={this.state.playing}/>
       </div>
     );
   }
