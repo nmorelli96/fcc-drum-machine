@@ -60,6 +60,34 @@ body::before {
   background-color: grey;
   text-align: center;
   width: 150px;
+  font-weight: 500;
+}
+#drum-machine #drum-machine-row #misc-container .container #volume {
+  width: 150px;
+}
+#drum-machine #drum-machine-row #misc-container .container #volumeDisplay {
+  background-color: grey;
+  text-align: center;
+  width: 40px;
+  margin-left: 10px;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(24, 24, 24, 0.85);
+  color: lightgrey;
+  font-weight: 500;
+}
+footer a {
+  text-decoration: none;
+  color: gold;
+  text-shadow: 0 0 5px goldenrod;
+}
+footer a:hover {
+  color: goldenrod;
 }
 
 .flipAnim {

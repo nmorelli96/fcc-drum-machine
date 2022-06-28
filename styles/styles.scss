@@ -70,12 +70,44 @@ body::before {
           background-color: grey;
           text-align: center;
           width: 150px;
-          
+          font-weight: 500;
+        }
+
+        #volume {
+          width: 150px;
+        }
+
+        #volumeDisplay {
+          background-color: grey;
+          text-align: center;
+          width: 40px;
+          margin-left: 10px;
         }
       }
     }
   }
 }
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  background-color: rgba(24, 24, 24, 0.85);
+  color: lightgrey;
+  font-weight: 500;
+
+  a {
+    text-decoration: none;
+    color: gold;
+    text-shadow: 0 0 5px goldenrod;
+  }
+  
+  a:hover {
+    color: goldenrod;
+  }
+}
+
 
 .flipAnim {
   -webkit-animation: flip 0.1s ease 0s 1 normal;

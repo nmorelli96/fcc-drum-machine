@@ -46,21 +46,12 @@ const drumSounds = [
   }
 ];
 
-class Soundboard extends React.Component {
-  constructor(props) {
-    super(props);
-
-  }
-
-  render() {
-    return (
-      <div className='container'>
-        <div id='display'>
-          {this.props.playing}
-        </div>
-      </div>
-    );
-  }
+const Footer = function () {
+  return (
+    <footer>Based on the <a target="_blank"
+    href="https://www.freecodecamp.org/learn/front-end-development-libraries/">FCC course</a> by <a
+    target="_blank" href="https://github.com/nmorelli96/fcc-random-quote-machine">nmorelli96</a></footer>
+  )
 }
 
 class Misc extends React.Component {
@@ -70,9 +61,14 @@ class Misc extends React.Component {
 
   render() {
     return (
-      <div className='container d-flex align-items-center justify-content-center'>
-        <div id='display'>
+      <div className='container d-flex flex-column align-items-center justify-content-center'>
+        <div className='mb-3' id='display'>
           {this.props.playing}
+        </div>
+        <div className='d-flex flex-nowrap'>
+          <input id="volume" type="range" min="0" max="1" step="0.05" onChange={this.props.setVolume} value={this.props.volumeLvl} >
+          </input>
+          <div id='volumeDisplay'>{(this.props.volumeLvl*100).toFixed(0)}</div>
         </div>
       </div>
     );
@@ -84,11 +80,13 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      playing: 'Welcome'
+      playing: 'Welcome',
+      volSlider: '1'
     };
     this.playSound = this.playSound.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.setVolume = this.setVolume.bind(this);
   }
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress);
@@ -103,6 +101,7 @@ class App extends React.Component {
       playing: `${keyElem.dataset.id}`,
     }))
     keyElem.currentTime = 0;
+    keyElem.volume = this.state.volSlider;
     keyElem.play();
   }
 
@@ -110,14 +109,11 @@ class App extends React.Component {
     //key length 1 avoids bugs with function keys as control, home, etc.
     if (event.key.length == 1 && event.key.match(/[qweasdzxc]/i)) {
       const btn = document.querySelector(`[data-key=${event.key}]`)
+      this.playSound(event.key)
       btn.classList.add('flipAnim');
       btn.addEventListener('animationend', () => {
         btn.classList.remove('flipAnim');
       })
-      /*setTimeout(function() {
-        btn.classList.remove('flipAnim');
-      }, 500);*/
-      this.playSound(event.key)
     }
   }
 
@@ -128,6 +124,13 @@ class App extends React.Component {
       btn.classList.remove('flipAnim');
     })
     this.playSound(event.target.dataset.key)
+  }
+
+  setVolume() {
+    const vol = document.getElementById('volume');
+    this.setState((state) => ({
+      volSlider: `${vol.value}`
+    }))
   }
 
   render() {
@@ -177,9 +180,11 @@ class App extends React.Component {
             </div>
           </div>
           <div className="col" id="misc-container">
-            <Misc playing={this.state.playing} />
+            <Misc playing={this.state.playing} setVolume={this.setVolume} volumeLvl={this.state.volSlider} />
+            
           </div>
         </div>
+        <Footer />
       </div>
     );
   }
