@@ -107,18 +107,32 @@ class App extends React.Component {
   }
 
   handleKeyPress(event) {
-    if (event.key.match(/[qweasdzxc]/i)) {
+    //key length 1 avoids bugs with function keys as control, home, etc.
+    if (event.key.length == 1 && event.key.match(/[qweasdzxc]/i)) {
+      const btn = document.querySelector(`[data-key=${event.key}]`)
+      btn.classList.add('flipAnim');
+      btn.addEventListener('animationend', () => {
+        btn.classList.remove('flipAnim');
+      })
+      /*setTimeout(function() {
+        btn.classList.remove('flipAnim');
+      }, 500);*/
       this.playSound(event.key)
     }
   }
 
   handleClick(event) {
+    const btn = document.querySelector(`[data-key=${event.target.dataset.key}]`)
+    btn.classList.add('flipAnim');
+    btn.addEventListener('animationend', () => {
+      btn.classList.remove('flipAnim');
+    })
     this.playSound(event.target.dataset.key)
   }
 
   render() {
     const buttons = drumSounds.map((elem) =>
-      <button className='btn btn-dark m-1 drum-pad' id={elem.id}
+      <button className='m-1 drum-pad' id={elem.id}
         data-key={elem.key} onClick={this.handleClick}>{elem.key.toUpperCase()}
         <audio className='clip' id={elem.key.toUpperCase()}
           src={elem.src} data-id={elem.id}>
