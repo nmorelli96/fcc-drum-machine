@@ -4,6 +4,10 @@ html {
   margin: 0;
 }
 
+body {
+  font-family: 'Saira', sans-serif !important;
+}
+
 body::before {
   z-index: -1;
   content: "";
@@ -22,7 +26,8 @@ body::before {
 #drum-machine {
 
   #drum-machine-row {
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(24, 24, 24, 0.85);
+    box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.75);
     border-radius: 5%;
     margin: 0;
     padding-top: 10px;
@@ -43,6 +48,13 @@ body::before {
             width: 100px;
             height: 100px;
             padding: 0;
+            background-color: goldenrod;
+            border: 1px black;
+            border-radius: 100%;
+            font-weight: 700;
+            text-shadow: 0 0 5px white;
+            background: rgb(187,146,55);
+            background: radial-gradient(circle, rgba(187,146,55,1) 0%, rgba(128,106,47,1) 20%, rgb(173, 139, 65) 51%, rgb(65, 50, 20) 100%);  
           }
         }
       }
@@ -53,16 +65,21 @@ body::before {
       max-width: 300px !important;
 
       .container {
-        
 
         #display {
           background-color: grey;
           text-align: center;
           width: 150px;
+          
         }
       }
     }
   }
+}
+
+.flipAnim {
+  -webkit-animation: flip 0.1s ease 0s 1 normal;
+  animation: flip 0.1s ease 0s 1 normal;
 }
 
 @media (max-width: 768px) {
@@ -79,5 +96,15 @@ body::before {
       width: 75px !important;
       height: 75px !important;
     }
+  }
+}
+
+@keyframes flip {
+  from {
+    transform: rotateX(0deg);
+  }
+
+  to {
+    transform: rotateX(120deg);
   }
 }
