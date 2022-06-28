@@ -24,9 +24,9 @@ body::before {
 }
 
 #drum-machine #drum-machine-row {
-  background-color: rgba(24, 24, 24, 0.85);
+  background-color: rgba(24, 24, 24, 0.9);
   box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.75);
-  border-radius: 5%;
+  border-radius: 20px;
   margin: 0;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -61,6 +61,7 @@ body::before {
   text-align: center;
   width: 150px;
   font-weight: 500;
+  border-radius: 3px;
 }
 #drum-machine #drum-machine-row #misc-container .container #volume {
   width: 150px;
@@ -70,6 +71,7 @@ body::before {
   text-align: center;
   width: 40px;
   margin-left: 10px;
+  border-radius: 3px;
 }
 
 footer {
@@ -77,9 +79,10 @@ footer {
   bottom: 0;
   width: 100%;
   text-align: center;
-  background-color: rgba(24, 24, 24, 0.85);
+  background-color: rgba(24, 24, 24, 0.9);
   color: lightgrey;
   font-weight: 500;
+  font-size: 0.9rem;
 }
 footer a {
   text-decoration: none;
@@ -88,6 +91,28 @@ footer a {
 }
 footer a:hover {
   color: goldenrod;
+}
+
+#info-icon:hover {
+  text-shadow: 0 0 5px goldenrod;
+}
+
+#info {
+  position: fixed;
+  bottom: 7%;
+  right: vw/2;
+  z-index: 1;
+  max-width: 50vw;
+  text-align: justify;
+  background-color: rgba(24, 24, 24, 0.9);
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 10px 10px 5px rgba(0, 0, 0, 0.75);
+}
+
+.info-active {
+  color: gold;
+  text-shadow: 0 0 5px goldenrod;
 }
 
 .flipAnim {
@@ -108,6 +133,10 @@ footer a:hover {
   #btn-container button {
     width: 75px !important;
     height: 75px !important;
+  }
+
+  #info {
+    max-width: 90vw;
   }
 }
 @-webkit-keyframes flip {

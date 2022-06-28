@@ -46,19 +46,58 @@ const drumSounds = [
   }
 ];
 
-const Footer = function () {
-  return (
-    <footer>Based on the <a target="_blank"
-    href="https://www.freecodecamp.org/learn/front-end-development-libraries/">FCC course</a> by <a
-    target="_blank" href="https://github.com/nmorelli96/fcc-random-quote-machine">nmorelli96</a></footer>
-  )
+class Footer extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <footer className="d-flex flex-nowrap align-content-center justify-content-center">
+        Based on the &nbsp;
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.freecodecamp.org/learn/front-end-development-libraries/"
+        >
+          FCC course
+        </a>
+        &nbsp; by &nbsp;
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://github.com/nmorelli96/fcc-random-quote-machine"
+        >
+          nmorelli96 &nbsp;
+        </a>
+        <div onClick={this.props.showInfoModal}>
+          <i id="info-icon" class="fa-solid fa-circle-question"></i>
+        </div>
+        <div id="info" style={this.props.infoStatus ? { display: "block" } : { display: "none" }}>
+          Drum sounds by &nbsp;
+          <a href="https://www.fesliyanstudios.com/royalty-free-sound-effects-download/drums-273"
+            target="_blank" rel="noopener noreferrer">
+            Fesliyan Studios <br />
+          </a>
+          Background by &nbsp;
+          <a href="https://unsplash.com/@matthijssm?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+            target="_blank" rel="noopener noreferrer">
+            Matthijs Smit
+          </a>
+          &nbsp; - &nbsp;
+          <a href="https://unsplash.com/es/s/fotos/drum-set?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+            target="_blank" rel="noopener noreferrer">
+            Unsplash
+          </a>
+        </div>
+      </footer>
+    );
+  }
 }
 
 class Misc extends React.Component {
   constructor(props) {
     super(props);
   }
-
   render() {
     return (
       <div className='container d-flex flex-column align-items-center justify-content-center'>
@@ -68,7 +107,7 @@ class Misc extends React.Component {
         <div className='d-flex flex-nowrap'>
           <input id="volume" type="range" min="0" max="1" step="0.05" onChange={this.props.setVolume} value={this.props.volumeLvl} >
           </input>
-          <div id='volumeDisplay'>{(this.props.volumeLvl*100).toFixed(0)}</div>
+          <div id='volumeDisplay'>{(this.props.volumeLvl * 100).toFixed(0)}</div>
         </div>
       </div>
     );
@@ -80,13 +119,17 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      playing: 'Welcome',
-      volSlider: '1'
+      playing: "Welcome",
+      volSlider: "1",
+      showInfo: false
     };
     this.playSound = this.playSound.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.setVolume = this.setVolume.bind(this);
+    this.showInfoModal = this.showInfoModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+
   }
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress);
@@ -133,6 +176,30 @@ class App extends React.Component {
     }))
   }
 
+  showInfoModal() {
+    const info = document.getElementById("info");
+    const infoIcon = document.getElementById("info-icon");
+    if (this.state.showInfo === false) {
+      this.setState((state) => ({
+        showInfo: true
+      }));
+      infoIcon.classList.toggle("info-active");
+    } else {
+      this.setState((state) => ({
+        showInfo: false
+      }));
+      infoIcon.classList.toggle("info-active");
+    }
+  }
+
+  closeModal() {
+    this.setState((state) => ({
+      showInfo: false
+    }));
+    const infoIcon = document.getElementById("info-icon");
+    infoIcon.classList.toggle("info-active")
+  }
+
   render() {
     const buttons = drumSounds.map((elem) =>
       <button className='m-1 drum-pad' id={elem.id}
@@ -141,6 +208,17 @@ class App extends React.Component {
           src={elem.src} data-id={elem.id}>
         </audio>
       </button>)
+
+    //Close info modal if click anywhere  
+    if (this.state.showInfo == true) {
+      setTimeout(() => {
+        document.addEventListener("click", this.closeModal);
+      }, 50);
+    }
+    else if (this.state.showInfo == false) {
+      document.removeEventListener("click", this.closeModal);
+    }
+
     return (
       <div className="container d-flex justify-content-center" id="drum-machine">
         <div className="row align-items-center justify-content-center" id="drum-machine-row">
@@ -181,10 +259,10 @@ class App extends React.Component {
           </div>
           <div className="col" id="misc-container">
             <Misc playing={this.state.playing} setVolume={this.setVolume} volumeLvl={this.state.volSlider} />
-            
+
           </div>
         </div>
-        <Footer />
+        <Footer infoStatus={this.state.showInfo} showInfoModal={this.showInfoModal} />
       </div>
     );
   }
