@@ -65,7 +65,7 @@ class Footer extends React.Component {
         <a
           target="_blank"
           rel="noopener noreferrer"
-          href="https://github.com/nmorelli96/fcc-random-quote-machine"
+          href="https://github.com/nmorelli96/"
         >
           nmorelli96 &nbsp;
         </a>
